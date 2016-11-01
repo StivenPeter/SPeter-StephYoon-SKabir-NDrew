@@ -13,8 +13,8 @@ def SaveAndClose():
 	db.commit()
 	db.close()
 
-def AddAccount(user, password)
-	check = "SELECT userid FROM accounts WHERE accounts.userid = " + "user;"
+def AddAccount(user, password):
+	check = "SELECT userid FROM accounts WHERE accounts.userid = " + user + ";"
 	results = c.execute(check)
 	if len(results) == 0:
 		passw = hashlib.sha256(password).hexdigest()
@@ -24,6 +24,6 @@ def AddAccount(user, password)
 	else: 
 		return False
 def getAccountPass(user):
-	q = "SELECT pass FROM accounts WHERE accounts.userid = " + "user;"
+	q = "SELECT pass FROM accounts WHERE accounts.userid = " + user + ";"
 	results = c.execute(check)
 	return results
