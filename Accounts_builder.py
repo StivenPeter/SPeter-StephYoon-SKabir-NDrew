@@ -1,7 +1,7 @@
 import sqlite3 
 import hashlib
 
-f = "data/master.db" 
+f = "data/data.db" 
 db = sqlite3.connect(f) 
 c = db.cursor() 
 
