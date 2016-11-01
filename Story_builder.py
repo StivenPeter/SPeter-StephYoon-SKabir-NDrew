@@ -19,11 +19,11 @@ def AddStory(userid, title, cont):
 def GetStory(title):
 	q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = " + title + ";"
 	results = c.execute(q)
-	return results
+	return results[0][0]
 def GetStoriesFromUser(userid):
 	q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = " + userid + ";"
 	results = c.execute(q)
-	return results
+	return results[0][0] 
 def GetLatestStory(): 
 	q = "SELECT * FROM stories;"
 	results = c.execute(q)
