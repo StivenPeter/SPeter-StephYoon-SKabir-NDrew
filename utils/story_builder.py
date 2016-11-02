@@ -1,13 +1,14 @@
 import sqlite3
 from datetime import datetime
 
-f = "data/data.db"
+f = "../data/data.db"
 db = sqlite3.connect(f)
 c = db.cursor()
 
 def createStoryTable():
 	q = "CREATE TABLE stories (userid TEXT, title TEXT, cont TEXT, timestam TEXT);"
 	c.execute(q)
+
 def saveAndClose():
 	db.commit()
 	db.close()
@@ -21,6 +22,7 @@ def getStory(title):
 	q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = " + title + ";"
 	results = c.execute(q)
 	return results[0][0]
+
 def getStoriesFromUser(userid):
 	q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = " + userid + ";"
 	results = c.execute(q)
@@ -37,3 +39,7 @@ def getLatestStory():
 			time = rowtime.timestamp
 			latestrow = row
 		return latestrow
+
+#==========================================================
+db.commit() #save changes
+db.close()  #close database
