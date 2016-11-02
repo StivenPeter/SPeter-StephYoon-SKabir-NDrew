@@ -1,5 +1,15 @@
 {% extends "basic.html" %}
 {% block head %}
+<title>Story Menu</title>
+<h1>Story Menu</h1>
 {% endblock %}
+<h2>Choose a story to contribute to!</h2>
+<form action="/story-form/" method="POST">
+  {% for title in d %}
+  <input type="submit" value="{{title}}" name="selection"><br>
+  {% endfor %}
+</form>
+<form action="/logout/" method="POST">
+  <input type="submit" value="Logout" name="logout"><br>
 {% block body %}
 {% endblock %}
