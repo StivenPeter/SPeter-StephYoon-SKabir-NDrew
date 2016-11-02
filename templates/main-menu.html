@@ -1,9 +1,9 @@
-{% extends basic.html %}
-{% block head}
+{% extends "basic.html" %}
+{% block head %}
 <title>Main Menu</title>
 <h1>Main Menu</h1>
 {% endblock %}
-{% block body}
+{% block body %}
 <form action = "/story-form/" method="POST">
   Title: <input type="text" name="title"><br>
   <input type = "submit" value = "Create a new story"><br>

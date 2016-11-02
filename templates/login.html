@@ -1,9 +1,9 @@
-{% extends basic.html %}
-{% block head}
+{% extends "basic.html" %}
+{% block head %}
 <title>Login and Register</title>
 <h1>Login and Register</h1>
 {% endblock %}
-{% block body}
+{% block body %}
 <form action="/authenticate/" method="POST">
       Username: <input type="text" name="user"><br>
       Password: <input type="password" name="password"><br>
