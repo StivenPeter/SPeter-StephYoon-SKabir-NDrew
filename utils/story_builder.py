@@ -15,31 +15,66 @@ def save():
 def close():
 	db.close()
 
-# must check if userid is valid!
-def addNewStory(userid, title, cont):
-	timestam = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
-	q = "INSERT INTO stories VALUES (\'%s\',\'%s\',\'%s\',\'%s\')" % (userid, title, cont, timestam)
+def userExists(user):
+	q = "SELECT userid FROM accounts WHERE accounts.userid = \'" + user + "\'"
 	c.execute(q)
+	if (c.fetchone()): # if userid exists
+		return True
+	else:
+		return False
 
-# must check if userid & title of story are valid!
-# must add to pre-exisitng content, not add another entry
-def addContStory(userid, title, cont):
-	timestam = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
-	q = 'INSERT INTO stories VALUES (%s,%s,%s,%s);'%(userid,title,cont, timestam)
+def storyExists(title):
+	q = "SELECT title FROM stories WHERE stories.title = \'" + title + "\'"
 	c.execute(q)
+	if (c.fetchone()): # if title exists
+		return True
+	else:
+		return False
+
+def addNewStory(userid, title, cont):
+	if userExists(userid) and (not storyExists(title)): # if user exists & title doesn't exist
+		timestam = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+		q = "INSERT INTO stories VALUES (\'%s\',\'%s\',\'%s\',\'%s\')" % (userid, title, cont, timestam)
+		c.execute(q)
+		return True
+	else:
+		return False
+
+# must check if title of story is valid!
+# case: story title doesn't exist
+def addContStory(userid, title, cont):
+	if userExists(userid) and storyExists(title):
+		timestam = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+		q = 'INSERT INTO stories VALUES (\'%s\',\'%s\',\'%s\',\'%s\')'%(userid,title,cont, timestam)
+		c.execute(q)
+		return True
+	else:
+		return False
 
 # must check if title is valid!
+# not printing out information
 def getStory(title):
-	q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = " + title
-	results = c.execute(q)
-	return results[0][0]
+	if storyExists(title):
+		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = \' %s \'" % (title)
+		results = c.execute(q)
+		for entry in results:
+			print "%s, %s, %s"%(entry[0], entry[1], entry[2])
+		return True
+	else:
+		return False
 
-# must check if userid is valid!
+# not printing out information
 def getStoriesFromUser(userid):
-	q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = " + userid
-	results = c.execute(q)
-	return results[0][0]
+	if userExists(userid):
+		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = \' %s \'" % (userid)
+		results = c.execute(q)
+		for entry in results:
+			print entry
+		return True
+	else:
+		return False
 
+# returns object - should it return string?
 # list of stories
 def getLatestStory():
 	q = "SELECT * FROM stories;"
@@ -55,7 +90,14 @@ def getLatestStory():
 
 def test():
 	#createStoryTable()
-	addContStory("a", "boo", "blah blah")
+	#print addContStory("a", "c", "blah blah")
+	#print(userExists("a"))
+	#print(userExists("harambe"))
+	#print addNewStory("a", "d", "la")
+	#print(getLatestStory)
+	#print storyExists("boo")
+	#print storyExists("no")
+	print getStoriesFromUser("a")
 	save()
 	close()
 
