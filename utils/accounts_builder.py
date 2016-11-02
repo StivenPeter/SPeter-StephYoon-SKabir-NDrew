@@ -18,12 +18,12 @@ def close():
 def addAccount(user, password):
 	check = "SELECT userid FROM accounts WHERE accounts.userid = \'" + user + "\'"
 	c.execute(check)
-	if not c.fetchone():
+	if not c.fetchone(): # if userid does not exist
 		passw = hashlib.sha256(password).hexdigest()
 		q = "INSERT INTO accounts VALUES (\'%s\',\'%s\')" % (user, passw)
 		c.execute(q)
 		return True
-	else:
+	else: # userid exists
 		return False
 
 def getAccountPass(user):
