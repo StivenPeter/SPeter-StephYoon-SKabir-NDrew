@@ -1,0 +1,11 @@
+{% extends "basic.html" %}
+{% block head %}
+<title>Story Form: {{title}}</title>
+<h1>{{title}}</h1>
+{% endblock %}
+{% block body %}
+<form action="/story-display/" method="POST">
+  <textarea id="newSubmission" class="text" cols="50" rows="50" name="newSubmission"></textarea><br>
+  <input type="submit" value="Publish"><br>
+</form>
+{% endblock %}
