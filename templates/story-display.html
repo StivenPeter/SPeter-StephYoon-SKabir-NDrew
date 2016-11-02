@@ -1,5 +1,13 @@
 {% extends "basic.html" %}
 {% block head %}
+<title>Story Display: {{title}}</title>
+<h1>{{title}}</h1>
 {% endblock %}
 {% block body %}
+{% for chapter in d %}
+
+{% endfor %}
+<form action="/logout/" method="POST">
+  <input type="submit" value="Logout" name="logout"><br>
+</form>
 {% endblock %}
