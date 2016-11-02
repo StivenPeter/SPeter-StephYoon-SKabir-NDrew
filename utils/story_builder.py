@@ -1,7 +1,7 @@
 import sqlite3
 from datetime import datetime
 
-f = "../data/data.db"
+f = "data/data.db"
 db = sqlite3.connect(f)
 c = db.cursor()
 
@@ -9,8 +9,10 @@ def createStoryTable():
 	q = "CREATE TABLE stories (userid TEXT, title TEXT, cont TEXT, timestam TEXT);"
 	c.execute(q)
 
-def saveAndClose():
+def save():
 	db.commit()
+
+def close():
 	db.close()
 
 def addStory(userid, title, cont):
@@ -40,6 +42,7 @@ def getLatestStory():
 			latestrow = row
 		return latestrow
 
-#==========================================================
-db.commit() #save changes
-db.close()  #close database
+def test():
+	createStoryTable()
+	save()
+	close()

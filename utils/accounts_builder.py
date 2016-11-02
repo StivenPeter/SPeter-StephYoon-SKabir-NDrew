@@ -9,31 +9,34 @@ def createAccountsTable():
 	q = "CREATE TABLE accounts (userid TEXT, pass TEXT)"
 	c.execute(q)
 
-def saveAndClose():
+def save():
 	db.commit()
+
+def close():
 	db.close()
 
 def addAccount(user, password):
 	check = "SELECT userid FROM accounts WHERE accounts.userid = \'" + user + "\'"
-	results = c.execute(check)
-	print results.count()
-	if len() == 0:
+	c.execute(check)
+	if not c.fetchone():
 		passw = hashlib.sha256(password).hexdigest()
-		q = "INSERT INTO accounts VALUES (%s,%s)" % (userid, passw)
+		q = "INSERT INTO accounts VALUES (\'%s\',\'%s\')" % (user, passw)
 		c.execute(q)
 		return True
 	else:
 		return False
 
 def getAccountPass(user):
-	q = "SELECT pass FROM accounts WHERE accounts.userid = " + user
-	results = c.execute(check)
-	return results[0][0]
+	q = "SELECT pass FROM accounts WHERE accounts.userid = \'" + user + "\'"
+	results = c.execute(q);
+	for entry in results:
+		return entry[0]
 
 def test():
 	#createAccountsTable()
-	addAccount("a", "a")
-	saveAndClose()
-	#getAccountPass("a")
+	print(addAccount("a", "a"))
+	save()
+	print(getAccountPass("a"))
+	close()
 
 test()
