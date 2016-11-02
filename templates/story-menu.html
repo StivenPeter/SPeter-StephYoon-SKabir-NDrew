@@ -5,7 +5,7 @@
 {% endblock %}
 <h2>Choose a story to contribute to!</h2>
 <form action="/story-form/" method="POST">
-  {% for title in d %}
+  {% for title in list %}<!--list has titles: entries in the story table where the page number is 1 -->
   <input type="submit" value="{{title}}" name="selection"><br>
   {% endfor %}
 </form>
