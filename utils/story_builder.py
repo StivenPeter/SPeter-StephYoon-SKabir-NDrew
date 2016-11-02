@@ -57,9 +57,10 @@ def getStory(title):
 	if storyExists(title):
 		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = \' %s \'" % (title)
 		results = c.execute(q)
+		print results
 		for entry in results:
 			print "%s, %s, %s"%(entry[0], entry[1], entry[2])
-		return True
+		#return True
 	else:
 		return False
 
@@ -68,6 +69,7 @@ def getStoriesFromUser(userid):
 	if userExists(userid):
 		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = \' %s \'" % (userid)
 		results = c.execute(q)
+		print results
 		for entry in results:
 			print entry
 		return True
