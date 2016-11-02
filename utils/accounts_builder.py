@@ -31,7 +31,8 @@ def getAccountPass(user):
 	results = c.execute(q);
 	for entry in results:
 		return entry[0]
-
+		
+'''
 def test():
 	#createAccountsTable()
 	print(addAccount("a", "a"))
@@ -40,3 +41,4 @@ def test():
 	close()
 
 test()
+'''
