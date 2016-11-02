@@ -14,9 +14,10 @@ def saveAndClose():
 	db.close()
 
 def addAccount(user, password):
-	check = "SELECT userid FROM accounts WHERE accounts.userid = " + user
+	check = "SELECT userid FROM accounts WHERE accounts.userid = \'" + user + "\'"
 	results = c.execute(check)
-	if len(results) == 0:
+	print results.count()
+	if len() == 0:
 		passw = hashlib.sha256(password).hexdigest()
 		q = "INSERT INTO accounts VALUES (%s,%s)" % (userid, passw)
 		c.execute(q)
