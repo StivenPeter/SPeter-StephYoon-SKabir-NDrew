@@ -4,6 +4,10 @@
 <h1>{{title}}</h1>
 {% endblock %}
 {% block body %}
+<h2>Previous Chapter</h2>
+<h4>by {{userId}}</h4>
+{{cont}}
+<h2>New Chapter</h2>
 <form action="/story-display/" method="POST">
   <textarea id="newSubmission" class="text" cols="50" rows="50" name="newSubmission"></textarea><br>
   <input type="submit" value="Publish" name="enter"><br>
