@@ -6,9 +6,9 @@
 {% block body %}
 <form action = "/story-form/" method="POST">
   Title: <input type="text" name="title"><br>
-  <input type = "submit" value = "Create a new story"><br>
+  <input type = "submit" value = "Create a new story" name="newStory"><br>
 </form>
 <form action = "/story-menu/">
-  <input type = "submit" value = "Add to an existing story"><br>
+  <input type = "submit" value = "Add to an existing story" name="existingStory"><br>
 </form>
 {% endblock %}
