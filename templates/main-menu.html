@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Main Menu</title>
-    <h1>Main Menu</h1>
-  </head>
-  <body>
-    {{message}}
-    <a href="http://127.0.0.1:5000/story-form">New Story</a>
-    <a href="http://127.0.0.1:5000/story-menu">Add to a Story</a>
-  </body>
-</html>
+{% extends basic.html %}
+{% block head}
+<title>Main Menu</title>
+<h1>Main Menu</h1>
+{% endblock %}
+{% block body}
+<form action = "/story-form/" method="POST">
+  Title: <input type="text" name="title"><br>
+  <input type = "submit" value = "Create a new story"><br>
+</form>
+<form action = "/story-menu/">
+  <input type = "submit" value = "Add to an existing story"><br>
+</form>
+{% endblock %}

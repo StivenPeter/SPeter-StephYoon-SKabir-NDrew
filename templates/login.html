@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Login and Register</title>
-    <h1>Login and Register</h1>
-  </head>
-  <body>
-    {{message}}
-    <form action="/authenticate/" method="POST">
+{% extends basic.html %}
+{% block head}
+<title>Login and Register</title>
+<h1>Login and Register</h1>
+{% endblock %}
+{% block body}
+<form action="/authenticate/" method="POST">
       Username: <input type="text" name="user"><br>
       Password: <input type="password" name="password"><br>
       <input type="submit" name="enter" value="Register"><br>
       <input type="submit" name="enter" value="Login">
-    </form> 
-  </body>
-</html>
+</form> 
+{% endblock %}
