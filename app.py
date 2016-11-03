@@ -78,7 +78,11 @@ def storyform():
                 return redirect(url_for('main'))
         author=session['user']
         title=request.form['title']
-        d={'author':author, 'timestamp':'','content':''}
+        session['addStoryTitle']=title
+        d={'prevUserId':author, 'timestamp':'','prevContent':''}
+        if utils.story_builder.storyExists(title)!=False:
+                session['message']='Story Title Exists'
+                return redirect(url_for('main'))     
         return render_template("story-form.html", d=d, title=title, chapterdata='First Chapter')
 
 @app.route("/story-display/", methods=['POST'])
