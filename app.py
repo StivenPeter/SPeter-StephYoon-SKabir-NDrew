@@ -17,6 +17,10 @@ app.secret_key = os.urandom(10)
 def main():
 	if "user" not in session:
 		return redirect(url_for('login'))
+	elif 'message' in session:
+                message=session['message']
+                session['message']=''
+                return render_template('main-menu.html', message=message)
 	else:
 		return render_template('main-menu.html')
 			
