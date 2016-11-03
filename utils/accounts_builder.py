@@ -4,8 +4,13 @@ import hashlib
 
 
 def createAccountsTable():
+        f = "data/data.db"
+        db = sqlite3.connect(f)
+        c = db.cursor()
 	q = "CREATE TABLE accounts (userid TEXT, pass TEXT)"
 	c.execute(q)
+	db.commit()
+	db.close()
 
 def save():
 	db.commit()
@@ -43,11 +48,7 @@ def getAccountPass(user):
 	db.close()
 		
 
-'''def test():
-	#createAccountsTable()
-	print(addAccount("aaaaa", "aaaaa"))
-	save()
-	print(getAccountPass("aaaaa"))
-	close()'''
+
+#createAccountsTable()
 
 
