@@ -1,0 +1,18 @@
+Login and Register
+      message: string that would inform user that they've been registered, or if the username/password were incorrect (this still needs to be implemented by Shariar in app.py)
+      
+Main Menu
+     message: 
+     
+Story Menu
+     message: string that informs user if they chose to add to a story that they've already contributed to.
+     list->title: list of titles of stories in database. There needs to be a function that creates a list of strings -- titles of entries in story table that have a page number 1. Also need a function in story_builder that returns a list of authors of a particular story. app.py would use that function to check if the session's user already wrote in the story they tried to submit.
+     
+Story Form
+      message:
+      d: dictionary that contains the keys prevUserId, prevTimestamp, and prevContent. Need a function in story_builder that returns this dictionary. 
+      
+Story Display
+      message:
+      title: from either main menu POST or story menu POST.
+      list->chapterdict: list of dictionaries, where each chapterdict has keys author, timestamp, page number, and content. Select from table based on whether the title is the same as the one inputted by story form.  Need a function that constructs a chapterdict, and a function that adds a chapterdict to the list based on page number as the index.
