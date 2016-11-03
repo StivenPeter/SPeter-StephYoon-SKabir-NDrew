@@ -9,9 +9,9 @@ import utils.story_builder
 app = Flask(__name__)
 app.secret_key = os.urandom(10)
 
-f = "data/data.db"
-db = sqlite3.connect(f)
-c = db.cursor()
+#f = "data/data.db"
+#db = sqlite3.connect(f)
+#c = db.cursor()
 
 
 
