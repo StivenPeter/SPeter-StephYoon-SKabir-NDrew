@@ -4,15 +4,10 @@ import os
 import sqlite3
 import utils.accounts_builder
 import hashlib
-#import utils.story_builder
-#accounts builder has issues
+
 
 app = Flask(__name__)
 app.secret_key = os.urandom(10)
-
-#f = "data/data.db"
-#db = sqlite3.connect(f)
-#c = db.cursor()
 
 
 
@@ -47,9 +42,6 @@ def register():
 
 		
 
-
-
-
 @app.route("/login/")
 def login():    
         if 'user' in session:
@@ -62,11 +54,18 @@ def login():
         return render_template("login.html")
 
 
-@app.route("/logout/", methods=['POST'])
-def logout():
-        if request.form['logout']=='Logout':
-                session.pop('user')   
-        return redirect(url_for('login'))
+@app.route("/story-menu/", methods=['POST'])
+def storymenu():
+        return render_template("story-menu.html")
+
+@app.route("/story-form/", methods=['POST'])
+def storyform():
+        return render_template("story-form.html")
+
+@app.route("/story-display/", methods=['POST'])
+def storydisplay():
+        return render_template("story-display.html", )
+
 
 if(__name__ == "__main__"):
     app.debug = True
