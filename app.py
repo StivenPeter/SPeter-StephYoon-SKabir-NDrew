@@ -1,12 +1,17 @@
 from flask import Flask, render_template, request, url_for, session, redirect
-import utils.login
 import hashlib
-import utils.Accounts_builder
-import utils.Story_builder
+import os
+import sqlite3
+import utils.accounts_builder
+#import utils.story_builder
+#accounts builder has issues
 
 app = Flask(__name__)
-app.secret_key = os.urandom() #do we want to use this
+app.secret_key = os.urandom(10)
 
+#f = "data/data.db"
+#db = sqlite3.connect(f)
+#c = db.cursor()
 
 
 @app.route("/")
@@ -15,16 +20,26 @@ def main():
 	if "user" not in session:
 		return redirect(url_for('login'))
 	else:
+                print session['user']
 		return render_template('main-menu.html')
 		
 	
 
-@app.route("/auth/", methods=['POST'])
+@app.route("/authenticate/", methods=['POST'])
 def register():
-	if request.form["type"]=='register':
-		Accounts_builder.AddAccount(request.form["user"],request.form["pass"])
-	elif request.form['type']=='login':
-		Accounts_builder.passcheck(request.form["user"],request.form["pass"]) #fxn not made yet
+        username=request.form["user"]
+        password=request.form["password"]
+	if request.form["enter"]=='Register':
+                result=utils.accounts_builder.addAccount(username,password)
+		session['user']=username
+		if result==True:
+                        return redirect(url_for('main'))
+                else:
+                        return render_template('main-menu.html')
+                        		
+	elif request.form['enter']=='Login':
+                print 'log'
+		#Accounts_builder.passcheck(request.form["user"],request.form["pass"]) #fxn not made yet
 	return render_template('main-menu.html')
 		
 
