@@ -87,13 +87,19 @@ def storyform():
 
 @app.route("/story-display/", methods=['POST'])
 def storydisplay():
-        print request.form
         if 'user' not in session:
                 return redirect(url_for('main'))
         elif request.form['enter']=='Publish':
+                title=session['addStoryTitle']
+                author = session['user']
+                content=request.form['newSubmission']
+                session['addStoryTitle']=''
+                dataList=[]
                 d={'author':session['user'], 'timestamp':'','content':request.form['newSubmission']}
-                
-        return render_template("story-display.html",chapterdict=d )
+                dataList.append(d)
+                utils.story_builder.addNewStory(author, title, content)
+                          
+        return render_template("story-display.html",list=dataList, title=title)
 
 
 if(__name__ == "__main__"):
