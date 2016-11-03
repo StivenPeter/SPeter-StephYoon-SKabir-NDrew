@@ -18,7 +18,7 @@ app.secret_key = os.urandom(10)
 
 @app.route("/")
 @app.route("/main-menu")
-def main():
+def main():   
 	if "user" not in session:
 		return redirect(url_for('login'))
 	else:
@@ -28,7 +28,7 @@ def main():
 	
 
 @app.route("/authenticate/", methods=['POST'])
-def register():
+def register():    
         username=request.form["user"]
         password=request.form["password"]
 	if request.form["enter"]=='Register':
@@ -45,22 +45,25 @@ def register():
                         session['user']=username            
                         return redirect(url_for('main'))
 	return render_template('main-menu.html')
+
 		
 
 
 
 
-@app.route("/login")
-def login():
-    if 'user' in session:
-        return redirect(url_for('main'))
-    return render_template("login.html")
+@app.route("/login/")
+
+def login():   
+        if 'user' in session:
+                return redirect(url_for('main'))
+        return render_template("login.html")
 
 
-@app.route("/logout")
+@app.route("/logout/", methods=['POST'])
 def logout():
-    session.pop('user')
-    return redirect(url_for('login'))
+        if request.form['logout']=='Logout':
+                session.pop('user')   
+        return redirect(url_for('login'))
 
 if(__name__ == "__main__"):
     app.debug = True
