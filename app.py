@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, url_for, session, redirect
 import hashlib
 import os
 import sqlite3
-import utils.accounts_builder
+from utils import accounts_builder
 import hashlib
 #import utils.story_builder
 #accounts builder has issues
