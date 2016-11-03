@@ -78,8 +78,14 @@ def storyform():
         return render_template("story-form.html", d=d, title=title, chapterdata='First Chapter')
 
 @app.route("/story-display/", methods=['POST'])
-def storydisplay():   
-        return render_template("story-display.html")
+def storydisplay():
+        print request.form
+        if 'user' not in session:
+                return redirect(url_for('main'))
+        elif request.form['enter']=='Publish':
+                d={'author':session['user'], 'timestamp':'','content':request.form['newSubmission']}
+                
+        return render_template("story-display.html",chapterdict=d )
 
 
 if(__name__ == "__main__"):
