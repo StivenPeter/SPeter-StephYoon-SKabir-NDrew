@@ -3,6 +3,7 @@ import hashlib
 import os
 import sqlite3
 import utils.accounts_builder
+import utils.story_builder
 import hashlib
 
 
@@ -63,15 +64,22 @@ def logout():
 
 @app.route("/story-menu/", methods=['POST'])
 def storymenu():
+
+        
         return render_template("story-menu.html")
 
 @app.route("/story-form/", methods=['POST'])
 def storyform():
-        return render_template("story-form.html")
+        if 'user' not in session:
+                return redirect(url_for('main'))
+        author=session['user']
+        title=request.form['title']
+        d={'author':author, 'timestamp':'','content':''}
+        return render_template("story-form.html", d=d, title=title, chapterdata='First Chapter')
 
 @app.route("/story-display/", methods=['POST'])
-def storydisplay():
-        return render_template("story-display.html", )
+def storydisplay():   
+        return render_template("story-display.html")
 
 
 if(__name__ == "__main__"):
