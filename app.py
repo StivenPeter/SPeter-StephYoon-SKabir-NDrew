@@ -68,8 +68,6 @@ def logout():
 
 @app.route("/story-menu/", methods=['POST'])
 def storymenu():
-
-        
         return render_template("story-menu.html")
 
 @app.route("/story-form/", methods=['POST'])
