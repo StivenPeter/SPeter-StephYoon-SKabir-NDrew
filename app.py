@@ -3,6 +3,7 @@ import hashlib
 import os
 import sqlite3
 import utils.accounts_builder
+import hashlib
 #import utils.story_builder
 #accounts builder has issues
 
@@ -12,6 +13,7 @@ app.secret_key = os.urandom(10)
 #f = "data/data.db"
 #db = sqlite3.connect(f)
 #c = db.cursor()
+
 
 
 @app.route("/")
@@ -38,8 +40,10 @@ def register():
                         return render_template('main-menu.html')
                         		
 	elif request.form['enter']=='Login':
-                print 'log'
-		#Accounts_builder.passcheck(request.form["user"],request.form["pass"]) #fxn not made yet
+                dbPassword=utils.accounts_builder.getAccountPass(username)
+                if dbPassword==hashlib.sha256(password).hexdigest():
+                        session['user']=username            
+                        return redirect(url_for('main'))
 	return render_template('main-menu.html')
 		
 
