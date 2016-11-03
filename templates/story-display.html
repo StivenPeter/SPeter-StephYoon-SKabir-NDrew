@@ -5,9 +5,10 @@
 {% endblock %}
 {% block body %}
 {% for chapterdict in list %} <!--chapterdict has a author, timestamp, content. Entries in story table where the title is what was passed through POST, added to list in order based on page number-->
-{{chapterdict[author]}}
-{{chapterdict[timestamp]}}
-{{chapterdict[content]}}
+{{chapterdict['author']}}
+{{chapterdict['timestamp']}}
+<br></br>
+{{chapterdict['content']}}
 {% endfor %}
 <form action="/logout/" method="POST">
   <input type="submit" value="Logout" name="logout"><br>
