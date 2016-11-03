@@ -5,6 +5,7 @@ import sqlite3
 import utils.accounts_builder
 import hashlib
 #import utils.story_builder
+#accounts builder has issues
 
 app = Flask(__name__)
 app.secret_key = os.urandom(10)
@@ -17,17 +18,14 @@ app.secret_key = os.urandom(10)
 
 @app.route("/")
 @app.route("/main-menu")
-def main():   
+def main():
 	if "user" not in session:
 		return redirect(url_for('login'))
 	else:
-                print session['user']
 		return render_template('main-menu.html')
-		
-	
-
+			
 @app.route("/authenticate/", methods=['POST'])
-def register():    
+def register():
         username=request.form["user"]
         password=request.form["password"]
 	if request.form["enter"]=='Register':
@@ -36,14 +34,16 @@ def register():
 		if result==True:
                         return redirect(url_for('main'))
                 else:
-                        return render_template('main-menu.html')
-                        		
+                        return render_template('main-menu.html')                 		
 	elif request.form['enter']=='Login':
                 dbPassword=utils.accounts_builder.getAccountPass(username)
-                if dbPassword==hashlib.sha256(password).hexdigest():
-                        session['user']=username            
+                if dbPassword==hashlib.sha256(password).hexdigest() and dbPassword != 'None':
+                        session['user']=username
                         return redirect(url_for('main'))
-	return render_template('main-menu.html')
+                else:
+                        session['message']='Username or Password is incorrect'
+                        redirect(url_for('login'))     
+	return redirect(url_for('login'))
 
 		
 
@@ -51,10 +51,14 @@ def register():
 
 
 @app.route("/login/")
-
-def login():   
+def login():    
         if 'user' in session:
                 return redirect(url_for('main'))
+        elif 'message' in session:
+                message=session['message']
+                session['message']=''
+                return render_template("login.html", message=message)
+        
         return render_template("login.html")
 
 
@@ -63,19 +67,6 @@ def logout():
         if request.form['logout']=='Logout':
                 session.pop('user')   
         return redirect(url_for('login'))
-
-@app.route("/story-menu/", methods=['POST'])
-def storymenu():
-        return render_template("story-menu.html")
-
-@app.route("/story-form/", methods=['POST'])
-def storyform():
-        return render_template("story-form.html")
-
-@app.route("/story-display/", methods=['POST'])
-def storydisplay():
-        return render_template("story-display.html", )
-
 
 if(__name__ == "__main__"):
     app.debug = True
