@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+import time
 
 f = "../data/data.db"
 db = sqlite3.connect(f)
@@ -15,6 +16,7 @@ def save():
 def close():
 	db.close()
 
+# True: user exists; False if not
 def userExists(user):
 	q = "SELECT userid FROM accounts WHERE accounts.userid = \'" + user + "\'"
 	c.execute(q)
@@ -23,6 +25,7 @@ def userExists(user):
 	else:
 		return False
 
+# True: story exists; False if not
 def storyExists(title):
 	q = "SELECT title FROM stories WHERE stories.title = \'" + title + "\'"
 	c.execute(q)
@@ -31,6 +34,8 @@ def storyExists(title):
 	else:
 		return False
 
+# returns True if story is added into story table; False if not
+# adds new story with NEW title
 def addNewStory(userid, title, cont):
 	if userExists(userid) and (not storyExists(title)): # if user exists & title doesn't exist
 		timestam = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
@@ -40,8 +45,8 @@ def addNewStory(userid, title, cont):
 	else:
 		return False
 
-# must check if title of story is valid!
-# case: story title doesn't exist
+# returns True if story is added into story table; False if not
+# adds new entry with TITLE THAT EXISTS
 def addContStory(userid, title, cont):
 	if userExists(userid) and storyExists(title):
 		timestam = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
@@ -51,28 +56,21 @@ def addContStory(userid, title, cont):
 	else:
 		return False
 
-# must check if title is valid!
 # not printing out information
 def getStory(title):
 	if storyExists(title):
-		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = \' %s \'" % (title)
+		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = \'%s\'" % (title)
 		results = c.execute(q)
-		print results
-		for entry in results:
-			print "%s, %s, %s"%(entry[0], entry[1], entry[2])
-		#return True
+		return results.fetchall()
 	else:
 		return False
 
 # not printing out information
 def getStoriesFromUser(userid):
 	if userExists(userid):
-		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = \' %s \'" % (userid)
+		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = \'%s\'" % (userid)
 		results = c.execute(q)
-		print results
-		for entry in results:
-			print entry
-		return True
+		return results.fetchall()
 	else:
 		return False
 
@@ -81,25 +79,19 @@ def getStoriesFromUser(userid):
 def getLatestStory():
 	q = "SELECT * FROM stories;"
 	results = c.execute(q)
-	latestrow = []
-	time = 0
-	for row in results:
-		rowtime = datetime.strptime(row[3], '%Y-%m-%d %H:%M:%S')
-		if (rowtime.timestamp() - time):
-			time = rowtime.timestamp
-			latestrow = row
-		return latestrow
+	return results.fetchall()[-1]
 
 def test():
 	#createStoryTable()
 	#print addContStory("a", "c", "blah blah")
 	#print(userExists("a"))
 	#print(userExists("harambe"))
-	#print addNewStory("a", "d", "la")
+	#print addNewStory("a", "kjslhkgfdh", "la")
 	#print(getLatestStory)
 	#print storyExists("boo")
 	#print storyExists("no")
-	print getStoriesFromUser("a")
+	#print getStoriesFromUser("a")
+	print getLatestStory()
 	save()
 	close()
 
