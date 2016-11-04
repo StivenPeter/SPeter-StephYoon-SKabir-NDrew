@@ -16,3 +16,7 @@ Story Display
       message:
       title: from either main menu POST or story menu POST.
       list->chapterdict: list of dictionaries, where each chapterdict has keys author, timestamp, page number, and content. Select from table based on whether the title is the same as the one inputted by story form.  Need a function that constructs a chapterdict, and a function that adds a chapterdict to the list based on page number as the index.
+
+User Page
+     message:
+     title->list: Same as story menu except based on whether the userId matches the session user.
