@@ -32,8 +32,8 @@ def addAccount(user, password):
 		db.close()
 		return True
 	else: # userid exists
-                save()
-                close()
+        save()
+        close()
 		return False
 
 def getAccountPass(user):
@@ -46,9 +46,7 @@ def getAccountPass(user):
 		return entry[0]
 	db.commit()
 	db.close()
-		
+
 
 
 #createAccountsTable()
-
-
