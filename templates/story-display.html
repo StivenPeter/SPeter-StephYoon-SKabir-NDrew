@@ -5,8 +5,8 @@
 {% endblock %}
 {% block body %}
 {% for chapterdict in list %} <!--chapterdict has a author, timestamp, content. Entries in story table where the title is what was passed through POST, added to list in order based on page number-->
-{{chapterdict['author']}}
-{{chapterdict['timestamp']}}
+{{chapterdict[0]}}
+{{chapterdict[2]}}
 <br></br>
 {{chapterdict['content']}}
 {% endfor %}
