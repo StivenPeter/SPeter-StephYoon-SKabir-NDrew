@@ -68,23 +68,47 @@ def logout():
 
 @app.route("/story-menu/", methods=['POST'])
 def storymenu():
-        return render_template("story-menu.html")
+        print request.form
+        if "user" not in session:
+		return redirect(url_for('login'))
+	Stories=utils.story_builder.getAll()
+	print Stories
+	Titles=[]
+	print utils.story_builder.getStory(Stories[0][1])
+	for x in Stories:
+                if x[1] not in Titles:          
+                        Titles.append(x[1])
+	
+        return render_template("story-menu.html",list=Titles)
 
 @app.route("/story-form/", methods=['POST'])
 def storyform():
         if 'user' not in session:
                 return redirect(url_for('main'))
-        author=session['user']
-        title=request.form['title']
-        session['addStoryTitle']=title
-        d={'prevUserId':author, 'timestamp':'','prevContent':''}
-        if utils.story_builder.storyExists(title)!=False:
-                session['message']='Story Title Exists'
-                return redirect(url_for('main'))     
-        return render_template("story-form.html", d=d, title=title, chapterdata='First Chapter')
+        elif 'selection' not in request.form:             
+                author=session['user']
+                title=request.form['title']
+                session['addStoryTitle']=title
+                d={'prevUserId':author, 'timestamp':'','prevContent':''}
+                if utils.story_builder.storyExists(title)!=False:
+                        session['message']='Story Title Exists'
+                        return redirect(url_for('main'))
+                return render_template("story-form.html", d=d, title=title, chapterdata='First Chapter')
+        else:
+                title = request.form['selection']
+                Storydata=utils.story_builder.getStory(title)
+                print Storydata[0]
+                d={'prevUserId':Storydata[-1][0], 'timestamp':Storydata[-1][2],'prevContent':Storydata[-1][2]}
+                session['addStoryTitle']=title
+                return render_template("story-form.html", d=d, title=title, chapterdata='')
+                
+                
+                
+        return render_template("story-form.html")
 
 @app.route("/story-display/", methods=['POST'])
 def storydisplay():
+        print request.form
         if 'user' not in session:
                 return redirect(url_for('main'))
         elif request.form['enter']=='Publish':
@@ -92,13 +116,24 @@ def storydisplay():
                 author = session['user']
                 content=request.form['newSubmission']
                 session['addStoryTitle']=''
-                dataList=[]
-                d={'author':session['user'], 'timestamp':'','content':request.form['newSubmission']}
-                dataList.append(d)
-                utils.story_builder.addNewStory(author, title, content)
-                          
-        return render_template("story-display.html",list=dataList, title=title)
+                if utils.story_builder.storyExists(title) == False:
+                        utils.story_builder.addNewStory(author, title, content)
+                elif authInStory(title,author):
+                        session['message']='You have already contributed to the selected Story'
+                        return redirect(url_for('main'))
+                        
+                else:
+                        utils.story_builder.addContStory(author, title, content)
+        story = utils.story_builder.getStory(title)                  
+        return render_template("story-display.html",list=story, title=title)
 
+
+def authInStory(title,author):
+        story = utils.story_builder.getStory(title)
+        for x in story:
+                if x[0]==author:
+                        return True
+        return False
 
 if(__name__ == "__main__"):
     app.debug = True
