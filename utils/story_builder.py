@@ -10,6 +10,8 @@ def createStoryTable():
         c = db.cursor()
 	q = "CREATE TABLE stories (userid TEXT, title TEXT, cont TEXT, timestam TEXT)"
 	c.execute(q)
+	db.commit()
+	db.close()
 
 def save():
 	db.commit()
@@ -95,7 +97,6 @@ def getStory(title):
 		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.title = \'%s\'" % (title)
 		results = c.execute(q)
 		db.commit()
-                db.close()
 		return results.fetchall()
 	else:
                 db.commit()
@@ -127,6 +128,13 @@ def getLatestStory():
 	q = "SELECT * FROM stories;"
 	results = c.execute(q)
 	return results.fetchall()[-1]
+def getAll():
+        f = "data/data.db"
+        db = sqlite3.connect(f)
+        c = db.cursor()
+	q = "SELECT * FROM stories;"
+	results = c.execute(q)
+	return results.fetchall()
 
 def test():
 	#createStoryTable()
@@ -139,5 +147,5 @@ def test():
 	#print storyExists("no")
 	#print getStoriesFromUser("a")
 	print getLatestStory()
-
+#createStoryTable()
 
