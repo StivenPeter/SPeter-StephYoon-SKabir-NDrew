@@ -5,6 +5,9 @@
 {% endblock %}
 {% block body %}
 <h2>Choose a story to contribute to!</h2>
+<form action="/main/" method="POST">
+  <input type="submit" value="Back to Main Menu" name="backmain"><br>
+</form>
 <form action="/story-form/" method="POST">
   {% for title in list %}<!--list has titles: entries in the story table where the page number is 1 -->
   <input type="submit" value="{{title}}" name="selection"><br>
