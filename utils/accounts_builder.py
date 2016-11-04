@@ -30,8 +30,6 @@ def addAccount(user, password):
         close()
         return True
     else: # userid exists
-        save()
-        close()
         return False
 
 def getAccountPass(user):
