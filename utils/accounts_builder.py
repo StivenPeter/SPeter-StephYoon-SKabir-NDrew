@@ -7,13 +7,13 @@ def createAccountsTable():
     c = db.cursor()
     q = "CREATE TABLE accounts (userid TEXT, pass TEXT)"
     c.execute(q)
-    db.commit()
-    db.close()
+    save(db)
+    close(db)
 
-def save():
+def save(db):
 	db.commit()
 
-def close():
+def close(db):
 	db.close()
 
 def addAccount(user, password):
@@ -26,8 +26,8 @@ def addAccount(user, password):
         passw = hashlib.sha256(password).hexdigest()
         q = "INSERT INTO accounts VALUES (\'%s\',\'%s\')" % (user, passw)
         c.execute(q)
-        save()
-        close()
+        save(db)
+        close(db)
         return True
     else: # userid exists
         return False
@@ -40,7 +40,7 @@ def getAccountPass(user):
     results = c.execute(q)
     for entry in results:
         return entry[0]
-    db.commit()
-    db.close()
+    save(db)
+    close(db)
 
 #createAccountsTable()
