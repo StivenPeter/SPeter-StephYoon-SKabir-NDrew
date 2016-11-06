@@ -31,6 +31,17 @@ def addAccount(user, password):
         return True
     else: # userid exists
         return False
+    
+def checkAccount(user):
+    f = "data/data.db"
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    check = "SELECT userid FROM accounts WHERE accounts.userid = \'" + user + "\'"
+    c.execute(check)
+    if not c.fetchone(): # if userid does not exist
+        return True
+    else: # userid exists
+        return False
 
 def getAccountPass(user):
     f = "data/data.db"

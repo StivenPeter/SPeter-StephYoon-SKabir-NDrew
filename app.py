@@ -22,16 +22,30 @@ def main():
                 session['message']=''
                 return render_template('main-menu.html', message=message)
 	else:
-		return render_template('main-menu.html')
+                Stories=utils.story_builder.getStoriesFromUser(session['user'])
+                Titles=[]
+                for x in Stories:
+                        if x[1] not in Titles:          
+                                Titles.append(x[1])
+                print Titles
+		return render_template('main-menu.html', list=Titles)
 			
 @app.route("/authenticate/", methods=['POST'])
 def register():
         username=request.form["user"]
         password=request.form["password"]
 	if request.form["enter"]=='Register':
+                if username=='' or password =='':
+                        session['message']='Cant login without characters XD'
+
+                        return redirect(url_for('main'))    
+                        
+                elif utils.accounts_builder.checkAccount(username)==False:
+                        session['message']='Username exists'
+                        return redirect(url_for('login'))           
                 result=utils.accounts_builder.addAccount(username,password)
-		session['user']=username
 		if result==True:
+                        session['user']=username
                         return redirect(url_for('main'))
                 else:
                         return render_template('main-menu.html')                 		
@@ -68,13 +82,10 @@ def logout():
 
 @app.route("/story-menu/", methods=['POST'])
 def storymenu():
-        print request.form
         if "user" not in session:
 		return redirect(url_for('login'))
 	Stories=utils.story_builder.getAll()
-	print Stories
 	Titles=[]
-	print utils.story_builder.getStory(Stories[0][1])
 	for x in Stories:
                 if x[1] not in Titles:          
                         Titles.append(x[1])

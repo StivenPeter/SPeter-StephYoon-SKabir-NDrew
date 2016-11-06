@@ -112,11 +112,9 @@ def getStoriesFromUser(userid):
 		q = "SELECT userid, title, cont, timestam FROM stories WHERE stories.userid = \'%s\'" % (userid)
 		results = c.execute(q)
 		db.commit()
-                db.close()
 		return results.fetchall()
 	else:
                 db.commit()
-                db.close()
 		return False
 
 # returns object - should it return string?
