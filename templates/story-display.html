@@ -6,9 +6,11 @@
 {% block body %}
 {% for chapterdict in list %} <!--chapterdict has a author, timestamp, content. Entries in story table where the title is what was passed through POST, added to list in order based on page number-->
 {{chapterdict[0]}}
+<br>
 {{chapterdict[2]}}
-<br></br>
+<br>
 {{chapterdict['content']}}
+<br><br><br>
 {% endfor %}
 <form action="/" ">
   <input type="submit" value="Back to Main Menu" ><br>
