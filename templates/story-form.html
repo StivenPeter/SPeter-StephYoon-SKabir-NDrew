@@ -6,8 +6,8 @@
 {% block body %}
 <h2>{{chapterdata}}</h2>
 <h4>by {{d['prevUserId']}}</h4>
-{{d['prevTimestamp']}}
-{{d['prevContent']}}
+<p>{{d['prevTimestamp']}}</p>
+<p>{{d['prevContent']}}</p>
 <h2>New Chapter</h2>
 <form action="/story-display/" method="POST">
   <textarea id="newSubmission" class="text" cols="50" rows="50" name="newSubmission"></textarea><br>
