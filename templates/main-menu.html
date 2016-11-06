@@ -15,8 +15,8 @@
   <input type="submit" value="Logout" name="logout"><br>
 </form>
 <h1> Stories you've contributed to</h1>
-<form action="/story-form/" method="POST">
-  {% for title in list %}<!--list has titles: entries in the story table where the page number is 1 -->
+<form action="/story-display/" method="POST">
+  {% for title in list %}<!--list has titles: entries in the story table where the author matches -->
   
   <input type="submit" value="{{title}}" name="selection"><br>
   {% endfor %}
