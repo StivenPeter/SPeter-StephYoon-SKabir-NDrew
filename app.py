@@ -18,7 +18,7 @@ app.secret_key = os.urandom(10)
 def main():
 	if "user" not in session:
 		return redirect(url_for('login'))
-	elif 'message' in session:
+	elif 'message' in session and session['message']!= '':
                 message=session['message']
                 session['message']=''
                 return render_template('main-menu.html', message=message)
@@ -123,6 +123,10 @@ def storydisplay():
         print request.form
         if 'user' not in session:
                 return redirect(url_for('main'))
+        elif 'selection' in request.form:
+                title = request.form['selection']
+                story = utils.story_builder.getStory(title)
+                return render_template("story-display.html",list=story, title=title)
         elif request.form['enter']=='Publish':
                 title=session['addStoryTitle']
                 author = session['user']
