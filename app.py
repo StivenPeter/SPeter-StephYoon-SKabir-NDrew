@@ -18,17 +18,22 @@ app.secret_key = os.urandom(10)
 def main():
 	if "user" not in session:
 		return redirect(url_for('login'))
+	
 	elif 'message' in session and session['message']!= '':
                 message=session['message']
                 session['message']=''
-                return render_template('main-menu.html', message=message)
+                Stories=utils.story_builder.getStoriesFromUser(session['user'])
+                Titles=[]
+                for x in Stories:
+                        if x[1] not in Titles:          
+                                Titles.append(x[1])
+                return render_template('main-menu.html', message=message, list = Titles)
 	else:
                 Stories=utils.story_builder.getStoriesFromUser(session['user'])
                 Titles=[]
                 for x in Stories:
                         if x[1] not in Titles:          
                                 Titles.append(x[1])
-                print Titles
 		return render_template('main-menu.html', list=Titles)
 			
 @app.route("/authenticate/", methods=['POST'])
