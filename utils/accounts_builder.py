@@ -1,6 +1,11 @@
 import sqlite3
 import hashlib
 
+f="data.db"
+
+db = sqlite3.connect(f) #open if f exists, otherwise create
+c = db.cursor()
+
 def createAccountsTable():
     f = "data/data.db"
     db = sqlite3.connect(f)
