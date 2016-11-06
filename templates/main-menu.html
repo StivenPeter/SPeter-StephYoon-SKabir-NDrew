@@ -5,9 +5,9 @@
 {% endblock %}
 {% block body %}
 <form action = "/story-form/" method="POST">
-  Title: <input type="text" name="title"><br>
+  Title: <input type="text" name="title"><br><br>
   <input type = "submit" value = "Create a new story" name="newStory"><br>
-</form>
+</form><br>
 <form action = "/story-menu/" method="POST">
   <input type = "submit" value = "Add to an existing story" name="existingStory"><br>
 </form>
@@ -18,7 +18,7 @@
 <form action="/story-display/" method="POST">
   {% for title in list %}<!--list has titles: entries in the story table where the author matches -->
   
-  <input type="submit" value="{{title}}" name="selection"><br>
+  <input type="submit" value="{{title}}" name="selection"><br><br>
   {% endfor %}
 </form>
 
