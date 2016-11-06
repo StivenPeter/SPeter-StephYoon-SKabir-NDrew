@@ -10,8 +10,8 @@ import hashlib
 app = Flask(__name__)
 app.secret_key = os.urandom(10)
 
-utils.accounts_builder.createAccountsTable()
-utils.story_builder.createStoryTable()
+#utils.accounts_builder.createAccountsTable()
+#utils.story_builder.createStoryTable()
 
 @app.route("/")
 @app.route("/main-menu")
